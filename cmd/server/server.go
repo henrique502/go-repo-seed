@@ -1,4 +1,4 @@
-package opsgenie
+package server
 
 import (
 	"io"
@@ -8,6 +8,7 @@ import (
 	"github.com/henrique502/opsgenie/internal/integrations/jsonplaceholder"
 )
 
+// Serve server http server
 func Serve() {
 	helloHandler := func(w http.ResponseWriter, req *http.Request) {
 		io.WriteString(w, jsonplaceholder.ListPosts())

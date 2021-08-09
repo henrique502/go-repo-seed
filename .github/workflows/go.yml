@@ -7,21 +7,39 @@ on:
     branches: [ main ]
 
 jobs:
-  build-go:
+  run:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Go
-      uses: actions/setup-go@v2
-      with:
-        go-version: 1.16
-    - name: Build
-      run: go build -v ./...
-    - name: Test
-      run: go test -v ./...
-  build-docker:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v2
-    - name: Build the Docker image
-      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.16
+
+      - uses: actions/checkout@v2
+
+      - name: Load cached dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/go/pkg/mod
+          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
+          restore-keys: |
+            ${{ runner.os }}-go-
+
+      - name: Build
+        run: go build -v ./...
+
+      - name: Test
+        run: go test -v ./...
+
+      - name: Lint
+        run: make lint
+
+      # - name: Cover
+      #   run: make cover
+
+      # - name: Upload coverage to codecov.io
+      #   uses: codecov/codecov-action@v1
+
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)

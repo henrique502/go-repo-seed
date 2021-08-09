@@ -13,12 +13,13 @@ import (
 var (
 	once    sync.Once
 	client  *http.Client
-	baseUrl string
+	baseURL string
 )
 
+// Init init http client instance
 func Init() {
 	once.Do(func() {
-		baseUrl = os.Getenv("JSONPLACEHOLDER_URL")
+		baseURL = os.Getenv("JSONPLACEHOLDER_URL")
 		client = &http.Client{
 			Timeout: time.Second * 20,
 			Transport: &http.Transport{
@@ -32,8 +33,9 @@ func Init() {
 	})
 }
 
+// ListPosts list posts
 func ListPosts() string {
-	resp, err := client.Get(baseUrl + "/posts")
+	resp, err := client.Get(baseURL + "/posts")
 	if err != nil {
 		log.Fatalln(err)
 	}
