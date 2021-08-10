@@ -11,7 +11,10 @@ import (
 // Serve server http server
 func Serve() {
 	helloHandler := func(w http.ResponseWriter, req *http.Request) {
-		io.WriteString(w, jsonplaceholder.ListPosts())
+		_, err := io.WriteString(w, jsonplaceholder.ListPosts())
+		if err != nil {
+			log.Fatalln(err)
+		}
 	}
 
 	http.HandleFunc("/hello", helloHandler)
