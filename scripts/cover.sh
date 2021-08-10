@@ -1,5 +1,5 @@
 #!/bin/bash
-go test -coverprofile=cover.out -v ./...
+go test -coverprofile=cover.out -covermode=atomic -v ./...
 go tool cover -html=cover.out -o cover.html
 if [ $? -eq 0 ]
 then

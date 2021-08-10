@@ -1,7 +1,7 @@
 package server
 
 import (
-	"io"
+	"encoding/json"
 	"log"
 	"net/http"
 
@@ -11,7 +11,9 @@ import (
 // Serve server http server
 func Serve() {
 	helloHandler := func(w http.ResponseWriter, req *http.Request) {
-		_, err := io.WriteString(w, jsonplaceholder.ListPosts())
+		w.Header().Set("Content-Type", "application/json")
+		posts := jsonplaceholder.ListPosts()
+		err := json.NewEncoder(w).Encode(posts)
 		if err != nil {
 			log.Fatalln(err)
 		}

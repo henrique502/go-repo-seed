@@ -60,7 +60,7 @@ jobs:
       - name: Upload coverage to codecov.io
         uses: codecov/codecov-action@v2
         with:
-          files: cover.html,cover.out
+          files: cover.out
           name: cover-$(date +%s)
           token: ${{ secrets.CODECOV_TOKEN }}
 
