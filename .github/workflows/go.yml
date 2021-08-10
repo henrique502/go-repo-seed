@@ -62,6 +62,7 @@ jobs:
         with:
           files: cover.html,cover.out
           name: cover-$(date +%s)
+          token: ${{ secrets.CODECOV_TOKEN }}
 
   lint:
     runs-on: ubuntu-latest
