@@ -1,22 +1,19 @@
 package main
 
 import (
-	"log"
+	_ "github.com/joho/godotenv/autoload"
 
-	"github.com/henrique502/go-repo-seed/cmd/server"
-	"github.com/henrique502/go-repo-seed/internal/integrations/jsonplaceholder"
-	"github.com/joho/godotenv"
-	"gopkg.in/DataDog/dd-trace-go.v1/ddtrace/tracer"
+	"github.com/henrique502/go-repo-seed/cmd/api"
+	_ "github.com/henrique502/go-repo-seed/infra/jsonplaceholder"
+	_ "github.com/henrique502/go-repo-seed/infra/opsgenie"
+	_ "github.com/henrique502/go-repo-seed/infra/postgre"
 )
 
 func main() {
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("Error loading .env file")
-	}
+	// DataDog
+	// tracer.Start()
+	// defer tracer.Stop()
 
-	tracer.Start()
-	jsonplaceholder.Init()
-	server.Serve()
-	defer tracer.Stop()
+	// API
+	api.Serve()
 }

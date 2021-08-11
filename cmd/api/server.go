@@ -1,11 +1,11 @@
-package server
+package api
 
 import (
 	"encoding/json"
 	"log"
 	"net/http"
 
-	"github.com/henrique502/go-repo-seed/internal/integrations/jsonplaceholder"
+	"github.com/henrique502/go-repo-seed/infra/jsonplaceholder"
 )
 
 // Serve server http server
@@ -15,7 +15,7 @@ func Serve() {
 		posts := jsonplaceholder.ListPosts()
 		err := json.NewEncoder(w).Encode(posts)
 		if err != nil {
-			log.Fatalln(err)
+			log.Panic(err)
 		}
 	}
 
