@@ -12,15 +12,8 @@ var instance *pgx.Conn
 
 // Init database connection
 func init() {
-	host := os.Getenv("POSTGRE_HOST")
-	port := os.Getenv("POSTGRE_PORT")
-	user := os.Getenv("POSTGRE_USER")
-	password := os.Getenv("POSTGRE_PASSWORD")
-	dbname := os.Getenv("POSTGRE_DATABASE_NAME")
-
 	var err error
-	connection := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", user, password, host, port, dbname)
-	instance, err = pgx.Connect(context.Background(), connection)
+	instance, err = pgx.Connect(context.Background(), os.Getenv("POSTGRE_URL"))
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)

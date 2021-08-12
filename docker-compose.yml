@@ -3,7 +3,7 @@ services:
   postgres:
     image: postgres:12.3-alpine
     volumes:
-      - ./database:/docker-entrypoint-initdb.d/
+      - ./database/development:/docker-entrypoint-initdb.d/
     ports:
       - 5432:5432
     network_mode: "bridge"

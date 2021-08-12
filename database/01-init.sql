@@ -1,3 +1,0 @@
-DROP DATABASE IF EXISTS "go_repo_seed";
-
-CREATE DATABASE "go_repo_seed" WITH OWNER "root" ENCODING 'UTF8';

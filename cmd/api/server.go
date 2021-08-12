@@ -4,16 +4,17 @@ import (
 	"encoding/json"
 	"log"
 	"net/http"
+	"time"
 
-	"github.com/henrique502/go-repo-seed/infra/jsonplaceholder"
+	"github.com/henrique502/go-repo-seed/infra/opsgenie"
 )
 
 // Serve server http server
 func Serve() {
 	helloHandler := func(w http.ResponseWriter, req *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
-		posts := jsonplaceholder.ListPosts()
-		err := json.NewEncoder(w).Encode(posts)
+		alerts := opsgenie.GetAlertList(time.Now())
+		err := json.NewEncoder(w).Encode(alerts)
 		if err != nil {
 			log.Panic(err)
 		}
