@@ -25,8 +25,8 @@ func AlertUpSert(alert domain.Alert) {
   `
 
 	_, err := instance.Exec(context.Background(), sql,
-		alert.Id, alert.Name, alert.Priority, alert.Source, alert.Message,
-		alert.IntegrationId, alert.ResponderIds, alert.CreatedAt, alert.UpdatedAt)
+		alert.ID, alert.Name, alert.Priority, alert.Source, alert.Message,
+		alert.IntegrationID, alert.ResponderIDs, alert.CreatedAt, alert.UpdatedAt)
 
 	if err != nil {
 		log.Fatalln(err)

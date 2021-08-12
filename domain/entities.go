@@ -3,13 +3,13 @@ package domain
 import "time"
 
 type Alert struct {
-	Id            string
+	ID            string
 	Name          string
 	Priority      string
 	Source        string
 	Message       string
-	IntegrationId string
-	ResponderIds  []string
+	IntegrationID string
+	ResponderIDs  []string
 	ColletedAt    time.Time
 	CreatedAt     time.Time
 	UpdatedAt     time.Time
