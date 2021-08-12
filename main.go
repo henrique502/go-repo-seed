@@ -1,22 +1,22 @@
 package main
 
 import (
-	"time"
-
 	_ "github.com/joho/godotenv/autoload"
 
-	"github.com/henrique502/go-repo-seed/domain/alerts"
+	"github.com/henrique502/go-repo-seed/cmd/api"
 	_ "github.com/henrique502/go-repo-seed/infra/opsgenie"
-	_ "github.com/henrique502/go-repo-seed/infra/postgre"
+	"github.com/henrique502/go-repo-seed/infra/postgre"
 )
 
 func main() {
+	defer postgre.Close()
+
 	// DataDog
 	// tracer.Start()
 	// defer tracer.Stop()
 
 	// API
-	// api.Serve()
+	api.Serve()
 
-	alerts.FetchDay(time.Now())
+	// alerts.FetchDay(time.Now())
 }

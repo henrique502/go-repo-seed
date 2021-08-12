@@ -35,7 +35,7 @@ func GetAlertList(day time.Time) infra.OpsgenieListAlertResponse {
 
 	response := infra.OpsgenieListAlertResponse{}
 	params := map[string]string{
-		"limit":  "2",
+		"limit":  "100",
 		"offset": "0",
 		"order":  "desc",
 		"sort":   "createdAt",

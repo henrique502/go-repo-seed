@@ -8,8 +8,9 @@ import (
 )
 
 func AlertUpSert(alert domain.Alert) {
+	log.Println(alert)
 	sql := `
-    INSERT INTO alerts
+    INSERT INTO public.alerts
       (id, name, priority, source, message, integration_id, responder_ids, created_at, updated_at)
     VALUES
       ($1, $2, $3, $4, $5, $6, $7, $8, $9)

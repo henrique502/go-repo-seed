@@ -41,6 +41,7 @@ func FetchDay(day time.Time) {
 }
 
 func aletsIterator(day time.Time) {
+	log.Println("a")
 	data := opsgenie.GetAlertList(time.Now())
 	syncAlerts(data.Data)
 
