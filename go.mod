@@ -12,7 +12,7 @@ require (
 	github.com/jackc/pgx/v4 v4.13.0
 	github.com/joho/godotenv v1.3.0
 	github.com/lib/pq v1.10.2
-	github.com/opsgenie/opsgenie-go-sdk-v2 v1.2.8
+	github.com/newrelic/go-agent/v3/integrations/logcontext/nrlogrusplugin v1.0.1
 	github.com/philhofer/fwd v1.1.1 // indirect
 	github.com/sirupsen/logrus v1.8.1
 	golang.org/x/crypto v0.0.0-20210711020723-a769d52b0f97 // indirect
