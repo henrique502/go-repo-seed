@@ -1,16 +1,36 @@
 package alerts
 
 import (
-	"log"
 	"time"
 
 	"github.com/henrique502/go-repo-seed/domain"
-	"github.com/henrique502/go-repo-seed/infra"
 	"github.com/henrique502/go-repo-seed/infra/opsgenie"
 	"github.com/henrique502/go-repo-seed/infra/postgre"
 )
 
-func syncAlerts(rows []infra.OpsgenieListAlert) {
+// SyncByDay fetch and update alerts table by day
+func SyncByDay(day time.Time) {
+	data := opsgenie.GetAlertListByDay(day)
+	syncAlerts(data.Data)
+
+	for len(data.Paging.Next) > 0 {
+		data = opsgenie.GetAlertListPagination(data.Paging.Next)
+		syncAlerts(data.Data)
+	}
+}
+
+// Sync fetch and update alerts table
+func Sync() {
+	data := opsgenie.GetAlertList()
+	syncAlerts(data.Data)
+
+	for len(data.Paging.Next) > 0 {
+		data = opsgenie.GetAlertListPagination(data.Paging.Next)
+		syncAlerts(data.Data)
+	}
+}
+
+func syncAlerts(rows []domain.AlertOpsgenie) {
 	for _, element := range rows {
 		responderIDs := []string{}
 
@@ -19,35 +39,18 @@ func syncAlerts(rows []infra.OpsgenieListAlert) {
 		}
 
 		alert := domain.Alert{
-			ID:            element.ID,
-			Message:       element.Message,
-			Priority:      element.Priority,
-			Source:        element.Source,
-			IntegrationID: element.ID,
-			ResponderIDs:  responderIDs,
-			CreatedAt:     element.CreatedAt,
-			UpdatedAt:     element.UpdatedAt,
+			ID:              element.ID,
+			Message:         element.Message,
+			Priority:        element.Priority,
+			Source:          element.Source,
+			ReportAckTime:   element.Report.AckTime,
+			ReportCloseTime: element.Report.CloseTime,
+			IntegrationID:   element.ID,
+			ResponderIDs:    responderIDs,
+			CreatedAt:       element.CreatedAt,
+			UpdatedAt:       element.UpdatedAt,
 		}
 
 		postgre.AlertUpSert(alert)
 	}
-}
-
-func FetchDay(day time.Time) {
-
-	log.Println("Fetch date: " + day.Format("2006-01-02"))
-	aletsIterator(day)
-
-}
-
-func aletsIterator(day time.Time) {
-	log.Println("a")
-	data := opsgenie.GetAlertList(time.Now())
-	syncAlerts(data.Data)
-
-	for len(data.Paging.Next) > 0 {
-		data = opsgenie.GetAlertListPagination(data.Paging.Next)
-		syncAlerts(data.Data)
-	}
-
 }

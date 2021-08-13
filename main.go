@@ -17,6 +17,4 @@ func main() {
 
 	// API
 	api.Serve()
-
-	// alerts.FetchDay(time.Now())
 }

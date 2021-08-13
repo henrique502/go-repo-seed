@@ -8,17 +8,18 @@ import (
 )
 
 func AlertUpSert(alert domain.Alert) {
-	log.Println(alert)
 	sql := `
     INSERT INTO public.alerts
-      (id, name, priority, source, message, integration_id, responder_ids, created_at, updated_at)
+      (id, priority, source, message, reportAckTime, reportCloseTime, integration_id, responder_ids, created_at, updated_at)
     VALUES
-      ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
     ON CONFLICT (id) DO UPDATE SET
       name = excluded.name,
       priority = excluded.priority,
       source = excluded.source,
       message = excluded.message,
+      reportCloseTime = excluded.reportCloseTime,
+      reportAckTime = excluded.reportAckTime,
       integration_id = excluded.integration_id,
       responder_ids = excluded.responder_ids,
       created_at = excluded.created_at,
