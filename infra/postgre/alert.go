@@ -10,25 +10,23 @@ import (
 func AlertUpSert(alert domain.Alert) {
 	sql := `
     INSERT INTO public.alerts
-      (id, priority, source, message, reportAckTime, reportCloseTime, integration_id, responder_ids, created_at, updated_at)
+      (id, priority, source, message, report_ack_time, report_close_time, integration_id, created_at, updated_at)
     VALUES
-      ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+      ($1, $2, $3, $4, $5, $6, $7, $8, $9)
     ON CONFLICT (id) DO UPDATE SET
-      name = excluded.name,
       priority = excluded.priority,
       source = excluded.source,
       message = excluded.message,
-      reportCloseTime = excluded.reportCloseTime,
-      reportAckTime = excluded.reportAckTime,
+      report_close_time = excluded.report_close_time,
+      report_ack_time = excluded.report_ack_time,
       integration_id = excluded.integration_id,
-      responder_ids = excluded.responder_ids,
       created_at = excluded.created_at,
       updated_at = excluded.updated_at;
   `
 
 	_, err := instance.Exec(context.Background(), sql,
-		alert.ID, alert.Name, alert.Priority, alert.Source, alert.Message,
-		alert.IntegrationID, alert.ResponderIDs, alert.CreatedAt, alert.UpdatedAt)
+		alert.ID, alert.Priority, alert.Source, alert.Message, alert.ReportAckTime, alert.ReportCloseTime,
+		alert.IntegrationID, alert.CreatedAt, alert.UpdatedAt)
 
 	if err != nil {
 		log.Fatalln(err)

@@ -45,8 +45,7 @@ func syncAlerts(rows []domain.AlertOpsgenie) {
 			Source:          element.Source,
 			ReportAckTime:   element.Report.AckTime,
 			ReportCloseTime: element.Report.CloseTime,
-			IntegrationID:   element.ID,
-			ResponderIDs:    responderIDs,
+			IntegrationID:   element.Integration.ID,
 			CreatedAt:       element.CreatedAt,
 			UpdatedAt:       element.UpdatedAt,
 		}

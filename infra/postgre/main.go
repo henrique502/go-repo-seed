@@ -26,6 +26,7 @@ func init() {
 	}
 }
 
+// Close database connection
 func Close() {
 	instance.Close(context.Background())
 }
