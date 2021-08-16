@@ -10,6 +10,7 @@ import (
 type key string
 
 var loggerKey key = "logger"
+var Log *Logger
 
 type Logger struct {
 	*logrus.Logger
@@ -23,6 +24,10 @@ func NewLogger() *Logger {
 	return &Logger{
 		l,
 	}
+}
+
+func init() {
+	Log = NewLogger()
 }
 
 func NewContext(ctx context.Context, logger *Logger) context.Context {
